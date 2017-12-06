@@ -28,6 +28,7 @@ export class AuthProvider {
   }
 
   signupUser(newEmail: string, newPassword: string): Promise<any> {
+    localStorage.setItem("active-user", newEmail);
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
   }
 
