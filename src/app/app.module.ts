@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 
 // Import the AF2 Module
 import { AngularFireDatabaseModule } from 'angularfire2/database';
