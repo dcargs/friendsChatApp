@@ -48,6 +48,7 @@ export class LoginPage {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
       .then( authData => {
         this.navCtrl.setRoot(HomePage);
+        localStorage.setItem("active-user", this.loginForm.value.email)
       }, error => {
         this.loading.dismiss().then( () => {
           let alert = this.alertCtrl.create({

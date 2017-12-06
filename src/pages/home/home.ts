@@ -13,27 +13,33 @@ export class HomePage {
 
    public messageForm : FormGroup;
    public messageList: Observable<any[]>;
+   public user: String;
 
   constructor(public navCtrl: NavController, public authData: AuthProvider, public formBuilder: FormBuilder,
     public alertCtrl: AlertController, public loadingCtrl: LoadingController, public afDatabase: AngularFireDatabase) {
       // create instance of message form and add validators
       this.messageForm = this.formBuilder.group({
-        message: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        data: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       });
 
       // connect data to live changes from server
-      //this.messageList = afDatabase.list<AngularFireList>('/Messages').valueChanges()
-      this.messageList = afDatabase.list('Messages').valueChanges()
-
-      console.log(this.messageList);
+      this.messageList = afDatabase.list('Messages',
+      ref => ref.orderByChild('order')).valueChanges()
   }
 
   sendMessage(){
     if (!this.messageForm.valid){
       console.log(this.messageForm.value)
     } else {
-      // this.messageList.push(this.messageForm.value)
-      this.afDatabase.list('Messages').push(this.messageForm.value)
+      var today = new Date();
+      var newMessageRef = this.afDatabase.list('Messages').push({});
+      newMessageRef.set({
+          data: this.messageForm.value.data,
+          user: localStorage.getItem("active-user"),
+          time: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear() +
+          " @ " + (today.getHours()<10?'0':'') + today.getHours() + ":" + (today.getMinutes()<10?'0':'') + today.getMinutes() + ":" + (today.getSeconds()<10?'0':'') + today.getSeconds(),
+          order: (-1 * Date.now())
+      });
     }
   }//end login user
 

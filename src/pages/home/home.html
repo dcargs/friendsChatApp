@@ -12,19 +12,23 @@
   <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
     <ion-item>
       <ion-label stacked>Message:</ion-label>
-      <ion-textarea #message formControlName="message"></ion-textarea>
+      <ion-textarea #data formControlName="data"></ion-textarea>
     </ion-item>
-    <ion-item class="error-message" *ngIf="!messageForm.controls.message.valid  && messageForm.controls.message.dirty">
+    <ion-item class="error-message" *ngIf="!messageForm.controls.data.valid  && messageForm.controls.data.dirty">
       <p>Your message needs some content.</p>
     </ion-item>
     <button ion-button type="submit" >Submit</button>
   </form>
 
-  <ion-list>
-    <ion-item *ngFor="let message of messageList | async">
-      {{ message.message }}
-    </ion-item>
-  </ion-list>
+  <ion-card *ngFor="let message of messageList | async">
+    <ion-card-header class="whiteText">
+      {{ message.user }}
+    </ion-card-header>
+    <ion-card-content class="whiteText">
+      <h2>{{ message.data }}</h2>
+      <p>Posted: {{ message.time }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ion-footer>
