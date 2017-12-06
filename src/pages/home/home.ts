@@ -51,6 +51,7 @@ export class HomePage {
     this.navCtrl.setRoot('LoginPage')
       .then ( navCtrl => {
         this.authData.logoutUser()
+        localStorage.clear()
       })
   }
 
