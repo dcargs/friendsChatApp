@@ -39,6 +39,9 @@ export class HomePage {
           time: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear() +
           " @ " + (today.getHours()<10?'0':'') + today.getHours() + ":" + (today.getMinutes()<10?'0':'') + today.getMinutes() + ":" + (today.getSeconds()<10?'0':'') + today.getSeconds(),
           order: (-1 * Date.now())
+      })
+      .then ( newMessageRef => {
+        this.messageForm.reset()
       });
     }
   }//end login user
