@@ -9,6 +9,7 @@
 <!-- apply this to get the colors from variables.scss bg-color="background" -->
 <ion-content padding>
 
+
   <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
     <ion-item>
       <ion-label stacked>Message:</ion-label>
@@ -17,13 +18,25 @@
     <ion-item class="error-message" *ngIf="!messageForm.controls.data.valid  && messageForm.controls.data.dirty">
       <p>Your message needs some content.</p>
     </ion-item>
-    <button ion-button type="submit" >Submit</button>
+    <button ion-button small type="submit" >Submit</button>
   </form>
 
   <ion-card *ngFor="let message of messageList | async">
-    <ion-card-header class="whiteText">
-      {{ message.user }}
-    </ion-card-header>
+
+     <div *ngIf="message.userDisplayName; then ifBlock else elseBlock"></div>
+    <!-- this is only here for the meantime -->
+    <ng-template #ifBlock>
+      <ion-card-header class="whiteText">
+        {{ message.userDisplayName }}
+      </ion-card-header>
+    </ng-template>
+
+    <ng-template #elseBlock>
+      <ion-card-header class="whiteText">
+        {{ message.user }}
+      </ion-card-header>
+    </ng-template>
+
     <ion-card-content class="whiteText">
       <h2>{{ message.data }}</h2>
       <p>Posted: {{ message.time }}</p>

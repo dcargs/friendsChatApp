@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase/app';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/first';
 
 /*
   Generated class for the AuthProvider provider.
@@ -11,7 +14,8 @@ import firebase from 'firebase/app';
 @Injectable()
 export class AuthProvider {
 
-  constructor(public afAuth: AngularFireAuth) {
+
+  constructor(public afAuth: AngularFireAuth, public afDatabase: AngularFireDatabase) {
 
   }
 
@@ -30,6 +34,17 @@ export class AuthProvider {
   signupUser(newEmail: string, newPassword: string): Promise<any> {
     localStorage.setItem("active-user", newEmail);
     return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
+  }
+
+  signupUserInfo(newEmail: string, newDisplayName: string): Promise<any> {
+    return this.afAuth.auth.currentUser.updateProfile({
+      displayName: newDisplayName,
+      photoURL: undefined
+    });
+  }
+
+  getUserInfo() {
+    return this.afAuth.auth.currentUser.displayName;
   }
 
 

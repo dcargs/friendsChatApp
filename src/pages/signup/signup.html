@@ -26,6 +26,15 @@
     </ion-item>
 
     <ion-item>
+      <ion-label stacked>Display Name</ion-label>
+      <ion-input formControlName="displayName" type="text" placeholder="Your display name"
+        [class.invalid]="!signupForm.controls.displayName.valid && signupForm.controls.displayName.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid  && signupForm.controls.email.dirty">
+      <p>Please enter a valid display name.</p>
+    </ion-item>
+
+    <ion-item>
       <ion-label stacked>Password</ion-label>
       <ion-input formControlName="password" type="password"  placeholder="Your password"
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty"></ion-input>
